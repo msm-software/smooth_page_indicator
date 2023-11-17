@@ -177,7 +177,7 @@ class SmoothIndicator extends StatelessWidget {
     return RotatedBox(
       quarterTurns: quarterTurns,
       child: GestureDetector(
-        onTapUp: _onTap,
+        onTapUp: onDotClicked != null ? _onTap : null,
         child: CustomPaint(
           size: size,
           // rebuild the painter with the new offset every time it updates
@@ -188,11 +188,9 @@ class SmoothIndicator extends StatelessWidget {
   }
 
   void _onTap(details) {
-    if (onDotClicked != null) {
-      var index = effect.hitTestDots(details.localPosition.dx, count, offset);
-      if (index != -1 && index != offset.toInt()) {
-        onDotClicked?.call(index);
-      }
+    var index = effect.hitTestDots(details.localPosition.dx, count, offset);
+    if (index != -1 && index != offset.toInt()) {
+      onDotClicked?.call(index);
     }
   }
 }
